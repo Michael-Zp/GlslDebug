@@ -19,9 +19,9 @@ namespace GlslDebug.Pipeline
         {
             var triangles = GenerateTriangles(vertexOutData);
 
-            const float xDim = 100;
+            const float xDim = 400;
             const float xPixelStep = 2.0f / xDim;
-            const float yDim = 100;
+            const float yDim = 400;
             const float yPixelStep = 2.0f / yDim;
 
             var fragments = new List<F>[(int)xDim, (int)yDim];

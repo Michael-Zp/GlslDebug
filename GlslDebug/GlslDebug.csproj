@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,7 +49,7 @@
     </Compile>
     <Compile Include="Pipeline\FragmentInDataBase.cs" />
     <Compile Include="Pipeline\FragmentStage.cs" />
-    <Compile Include="Pipeline\Programm.cs" />
+    <Compile Include="Programm.cs" />
     <Compile Include="Pipeline\Rasterizer.cs" />
     <Compile Include="Pipeline\ScreenOutput.cs" />
     <Compile Include="Pipeline\ShaderProgram.cs" />

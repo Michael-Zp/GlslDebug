@@ -46,10 +46,13 @@ namespace GlslDebug.Pipeline
                 vertexInData.Add(new VertexInData(new Vector3(.5f, 1, 0), 0));
             }
 
+            float avgTime = 0;
+            float count = 0;
 
+            Stopwatch stopwatch = new Stopwatch();
             while (true)
             {
-                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Reset();
 
                 stopwatch.Start();
 
@@ -57,7 +60,9 @@ namespace GlslDebug.Pipeline
 
                 stopwatch.Stop();
 
-                Console.WriteLine("Time: Ticks = " + stopwatch.Elapsed.Ticks + " ; Ms = " + stopwatch.Elapsed.Milliseconds);
+                count++;
+                avgTime = (avgTime * 0.85f) + (stopwatch.Elapsed.Milliseconds * 0.15f);
+                Console.WriteLine("Time: Ticks = " + stopwatch.Elapsed.Ticks + " ; Ms = " + stopwatch.Elapsed.Milliseconds + " ; Avg = " + avgTime);
             }
         }
 
