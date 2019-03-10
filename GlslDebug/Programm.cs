@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Numerics;
-using System.Threading;
 
 namespace GlslDebug.Pipeline
 {
@@ -30,8 +29,8 @@ namespace GlslDebug.Pipeline
             Console.WriteLine("Hello world!");
 
 
-            ShaderProgram<VertexInData, FragmentInData, FragmentInData> shaderProgram = new ShaderProgram<VertexInData, FragmentInData, FragmentInData>(VertexShader, FragmentShader);
-            
+            ShaderProgram<VertexInData, FragmentInData> shaderProgram = new ShaderProgram<VertexInData, FragmentInData>(VertexShader, FragmentShader);
+
             List<VertexInData> vertexInData = new List<VertexInData>
             {
                 new VertexInData(new Vector3(-1, -1, 0), 0),
@@ -39,10 +38,10 @@ namespace GlslDebug.Pipeline
                 new VertexInData(new Vector3(-1f, 1, 0), 0)
             };
 
-            for(int i = 0; i < 0; i++)
+            for (int i = 0; i < 0; i++)
             {
                 vertexInData.Add(new VertexInData(new Vector3(-1, -1, 0), 0));
-                vertexInData.Add(new VertexInData(new Vector3( 1, -1, 0), 0));
+                vertexInData.Add(new VertexInData(new Vector3(1, -1, 0), 0));
                 vertexInData.Add(new VertexInData(new Vector3(.5f, 1, 0), 0));
             }
 
@@ -66,7 +65,7 @@ namespace GlslDebug.Pipeline
             }
         }
 
-        private static FragmentInDataBase<FragmentInData> VertexShader(VertexInData inData)
+        private static FragmentInData VertexShader(VertexInData inData)
         {
             FragmentInData outData = new FragmentInData
             {

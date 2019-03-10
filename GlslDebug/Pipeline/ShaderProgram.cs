@@ -4,26 +4,24 @@ using System.Numerics;
 
 namespace GlslDebug.Pipeline
 {
-    public class ShaderProgram<V, R, F> where V : IVertexInData where R : FragmentInDataBase<R> where F : FragmentInDataBase<R>, R, new()
+    public class ShaderProgram<V, F> where V : IVertexInData where F : FragmentInDataBase<F>, new()
     {
-        private VertexStage<V, R, F> _vertexShader;
-        private Rasterizer<R, F> _rasterizer;
-        private FragmentStage<F, R> _fragmentStage;
+        private VertexStage<V, F> _vertexStage;
+        private Rasterizer<F> _rasterizer;
+        private FragmentStage<F> _fragmentStage;
 
-        public ShaderProgram(Func<V, FragmentInDataBase<R>> vertexShader, Func<F, Vector4> fragmentShader)
+        public ShaderProgram(Func<V, F> vertexShader, Func<F, Vector4> fragmentShader)
         {
-            _vertexShader = new VertexStage<V, R, F>();
-            _vertexShader.VertexShader = vertexShader;
+            _vertexStage = new VertexStage<V, F> { VertexShader = vertexShader };
 
-            _rasterizer = new Rasterizer<R, F>();
+            _rasterizer = new Rasterizer<F>();
 
-            _fragmentStage = new FragmentStage<F, R>();
-            _fragmentStage.FragmentShader = fragmentShader;
+            _fragmentStage = new FragmentStage<F> { FragmentShader = fragmentShader };
         }
 
         public void Invoke(List<V> vertexInData)
         {
-            _vertexShader.Invoke(vertexInData, _rasterizer, _fragmentStage);
+            _vertexStage.Invoke(vertexInData, _rasterizer, _fragmentStage);
         }
     }
 }

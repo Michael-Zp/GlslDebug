@@ -1,5 +1,6 @@
 ﻿using System;
 using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using System.Numerics;
 using System.Reflection;
 using System.Text;
@@ -31,6 +32,9 @@ namespace GlslDebug.Pipeline
             foreach (var property in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
                 string name = property.Name;
+
+
+
                 string type = property.PropertyType.Name;
                 interpolations += "\n" + @"
                     data." + name + @" = (" + type + @")(baryCoords.X * triangle.VertexData[0]." + name + @" +

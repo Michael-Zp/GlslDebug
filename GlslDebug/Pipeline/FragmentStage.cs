@@ -18,7 +18,7 @@ namespace GlslDebug.Pipeline
         }
     }
 
-    public class FragmentStage<F, T> where F : FragmentInDataBase<T>, T, new() where T : FragmentInDataBase<T>
+    public class FragmentStage<F> where F : FragmentInDataBase<F>, new()
     {
         public Func<F, Vector4> FragmentShader {
             private get;

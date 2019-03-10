@@ -13,9 +13,9 @@ namespace GlslDebug.Pipeline
         }
     }
 
-    public class Rasterizer<R, F> where R : FragmentInDataBase<R> where F : FragmentInDataBase<R>, R, new()
+    public class Rasterizer<F> where F : FragmentInDataBase<F>, new()
     {
-        public void Invoke(List<FragmentInDataBase<R>> vertexOutData, FragmentStage<F, R> fragmentStage)
+        public void Invoke(List<F> vertexOutData, FragmentStage<F> fragmentStage)
         {
             var triangles = GenerateTriangles(vertexOutData);
 
@@ -31,17 +31,17 @@ namespace GlslDebug.Pipeline
             {
                 float xPos = -1.0f + x * xPixelStep;
 
-                for(int y = 0; y < yDim; y++)
+                for (int y = 0; y < yDim; y++)
                 {
                     float yPos = -1.0f + y * yPixelStep;
 
                     fragments[x, y] = new List<F>();
-                    
-                    foreach(var triangle in triangles)
+
+                    foreach (var triangle in triangles)
                     {
                         Vector3 coords = Barycentric(xPos, yPos, triangle);
 
-                        if(coords.X >= 0 && coords.Y >= 0 && coords.Z >= 0)
+                        if (coords.X >= 0 && coords.Y >= 0 && coords.Z >= 0)
                         {
                             F data = new F();
                             data.Interpolate(coords, triangle);
@@ -54,11 +54,11 @@ namespace GlslDebug.Pipeline
             fragmentStage.Invoke(fragments);
         }
 
-        private List<Triangle<R>> GenerateTriangles(List<FragmentInDataBase<R>> verticies)
+        private List<Triangle<F>> GenerateTriangles(List<F> verticies)
         {
-            List<Triangle<R>> primitives = new List<Triangle<R>>();
+            List<Triangle<F>> primitives = new List<Triangle<F>>();
 
-            for(int i = 0; i + 2 < verticies.Count; i += 3)
+            for (int i = 0; i + 2 < verticies.Count; i += 3)
             {
                 /*
                 //Acceleration
@@ -73,19 +73,19 @@ namespace GlslDebug.Pipeline
                     primitives.Add(new Triangle<T>(new List<T> { (T)verticies[i], (T)verticies[i + 1], (T)verticies[i + 2] }));
                 }
                 */
-                
-                primitives.Add(new Triangle<R>(new List<R> { (R)verticies[i], (R)verticies[i + 1], (R)verticies[i + 2] }));
+
+                primitives.Add(new Triangle<F>(new List<F> { (F)verticies[i], (F)verticies[i + 1], (F)verticies[i + 2] }));
             }
 
             return primitives;
         }
 
 
-        private Vector3 Barycentric(float xPos, float yPos, Triangle<R> triangle)
+        private Vector3 Barycentric(float xPos, float yPos, Triangle<F> triangle)
         {
             Vector3 p = new Vector3(xPos, yPos, 0);
 
-            Vector3 v0 = triangle.VertexData[1].Position - triangle.VertexData[0].Position, 
+            Vector3 v0 = triangle.VertexData[1].Position - triangle.VertexData[0].Position,
                     v1 = triangle.VertexData[2].Position - triangle.VertexData[0].Position,
                     v2 = p - triangle.VertexData[0].Position;
 
